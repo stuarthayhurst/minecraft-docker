@@ -1,0 +1,16 @@
+services:
+  minecraft:
+    build:
+      context: .
+      args:
+        - JAVA_VERSION=26
+        - SPIGOT_VERSION=26.1.2
+        - EULA=true
+    environment:
+      - MINRAM=2G
+      - MAXRAM=16G
+    restart: unless-stopped
+    ports:
+      - "25565:25565"
+    stdin_open: true
+    tty: true
