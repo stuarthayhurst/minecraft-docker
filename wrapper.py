@@ -16,6 +16,9 @@ def handleSigterm(signalNumber, frame):
 
 #Intercept SIGTERM to send 'stop'
 signal(SIGTERM, handleSigterm)
-process.wait()
+try:
+  process.wait()
+except KeyboardInterrupt:
+  print('Server stopped')
 
 sys.exit(process.returncode)
