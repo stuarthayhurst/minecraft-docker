@@ -9,6 +9,7 @@ services:
     environment:
       - MINRAM=2G
       - MAXRAM=16G
+      - SHUTDOWN_PORT=20563
     restart: unless-stopped
     ports:
       - "25565:25565"

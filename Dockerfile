@@ -8,6 +8,7 @@ ARG SPIGOT_VERSION
 #Spigot build dependencies
 RUN apk add --no-cache git
 
+#Build the server .jar
 RUN wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
 RUN java -jar BuildTools.jar --rev ${SPIGOT_VERSION}
 
@@ -17,11 +18,14 @@ ARG EULA
 ARG SPIGOT_VERSION
 ENV SPIGOT_VERSION ${SPIGOT_VERSION}
 
+#Copy the server .jar in
 COPY --from=0 /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar
 WORKDIR /server
 
-#Wrapper to intercept SIGTERM and send "stop" instead
-ADD wrapper.py /server/wrapper.py
+#Plugin and wrapper to ping the shutdown plugin when SIGTERM is received, then shutdown gracefully
+RUN mkdir /server/plugins
+RUN wget -O /server/plugins/PingShutdown-latest.jar https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/PingShutdown-latest.jar
+RUN wget -O /server/wrapper.py https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/wrapper.py
 
 #Spigot and wrapper runtime dependencies
 RUN apk add --no-cache libudev-zero python3
