@@ -22,6 +22,26 @@ ENV SPIGOT_VERSION ${SPIGOT_VERSION}
 COPY --from=0 /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar
 WORKDIR /server
 
+VOLUME /server/data
+VOLUME /server/config
+VOLUME /server/plugins
+VOLUME /server/logs
+
+#Link miscellaneous configs to /server/config
+RUN ln -s /server/config/banned-ips.json /server/banned-ips.json
+RUN ln -s /server/config/banned-players.json /server/banned-players.json
+RUN ln -s /server/config/bukkit.yml /server/bukkit.yml
+RUN ln -s /server/config/commands.yml /server/commands.yml
+RUN ln -s /server/config/help.yml /server/help.yml
+RUN ln -s /server/config/ops.json /server/ops.json
+RUN ln -s /server/config/permissions.yml /server/permissions.yml
+RUN ln -s /server/config/server.properties /server/server.properties
+RUN ln -s /server/config/spigot.yml /server/spigot.yml
+RUN ln -s /server/config/whitelist.json /server/whitelist.json
+
+RUN mkdir -p /server/logs/crash-reports
+RUN ln -s /server/logs/crash-reports /server/crash-reports
+
 #Plugin and wrapper to ping the shutdown plugin when SIGTERM is received, then shutdown gracefully
 RUN mkdir /server/plugins
 RUN wget -O /server/plugins/PingShutdown-latest.jar https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/PingShutdown-latest.jar

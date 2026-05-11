@@ -15,3 +15,27 @@ services:
       - "25565:25565"
     stdin_open: true
     tty: true
+    volumes:
+      - data:/server/data
+      - config:/server/config
+      - plugins:/server/plugins
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${PWD}/${COMPOSE_PROJECT_NAME}/data"
+  config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${PWD}/${COMPOSE_PROJECT_NAME}/config"
+  plugins:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${PWD}/${COMPOSE_PROJECT_NAME}/plugins"
