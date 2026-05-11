@@ -2,7 +2,7 @@
 
 PROJECT_NAME="$1"
 if [[ "$PROJECT_NAME" == "" ]]; then
-  PROJECT_NAME="docker"
+  PROJECT_NAME="minecraft-docker"
 fi
 
 mkdir -p "$PROJECT_NAME/data"
