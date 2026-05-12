@@ -40,16 +40,16 @@ VOLUME /server/plugins
 VOLUME /server/logs
 
 #Link miscellaneous configs to /server/config
-RUN ln -s /server/config/banned-ips.json /server/banned-ips.json
-RUN ln -s /server/config/banned-players.json /server/banned-players.json
-RUN ln -s /server/config/bukkit.yml /server/bukkit.yml
-RUN ln -s /server/config/commands.yml /server/commands.yml
-RUN ln -s /server/config/help.yml /server/help.yml
-RUN ln -s /server/config/ops.json /server/ops.json
-RUN ln -s /server/config/permissions.yml /server/permissions.yml
-RUN ln -s /server/config/server.properties /server/server.properties
-RUN ln -s /server/config/spigot.yml /server/spigot.yml
-RUN ln -s /server/config/whitelist.json /server/whitelist.json
+RUN ln -s /server/config/banned-ips.json /server/banned-ips.json \
+    && ln -s /server/config/banned-players.json /server/banned-players.json \
+    && ln -s /server/config/bukkit.yml /server/bukkit.yml \
+    && ln -s /server/config/commands.yml /server/commands.yml \
+    && ln -s /server/config/help.yml /server/help.yml \
+    && ln -s /server/config/ops.json /server/ops.json \
+    && ln -s /server/config/permissions.yml /server/permissions.yml \
+    && ln -s /server/config/server.properties /server/server.properties \
+    && ln -s /server/config/spigot.yml /server/spigot.yml \
+    && ln -s /server/config/whitelist.json /server/whitelist.json
 
 RUN mkdir -p /server/logs/crash-reports
 RUN ln -s /server/logs/crash-reports /server/crash-reports
