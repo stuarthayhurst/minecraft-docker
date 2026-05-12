@@ -2,8 +2,5 @@
 
 #Config for miscellaneous scripts
 
-#Don't use trailing slashes for path configs
-BACKUP_PATH="/backups/Minecraft"
 BACKUP_NAME="Minecraft-Server"
-
 VERSION="26.1.2"

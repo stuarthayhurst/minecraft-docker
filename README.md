@@ -48,7 +48,7 @@
 > `SHUTDOWN_PORT` should be left as internal to container, otherwise anyone can ping the port to stop the server down
 
 ## Backups:
-  - Set `BACKUP_PATH`, `BACKUP_NAME` and `VERSION` in `backup-config` to configure the backups
-    - If `BACKUP_PATH` doesn't exist, a backup will be created in the working directory
-  - Run `./backup.sh` to backup `projects/`
+  - Use `BACKUP_NAME` and `VERSION` in `backup-config` to configure the backup's name
+  - Run `./backup.sh [DESTINATION]` to backup `projects/`
+    - If `DESTINATION` isn't specified or doesn't exist, the repository's directory will be used instead
   - Backups use `tar` and `pbzip2`
