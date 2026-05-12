@@ -65,4 +65,4 @@ EXPOSE 25565
 
 #Copy the PingShutdown plugin across, launch the wrapper
 CMD cp /server/PingShutdown-latest.jar /server/plugins/PingShutdown-latest.jar \
-    && python3 wrapper.py java -Xms$MINRAM -Xmx$MAXRAM -jar spigot-${SPIGOT_VERSION}.jar nogui --world-container "$WORLD_PATH"
+    && python3 wrapper.py java "-Xms$MINRAM" "-Xmx$MAXRAM" -jar spigot-${SPIGOT_VERSION}.jar nogui --world-container "$WORLD_PATH"

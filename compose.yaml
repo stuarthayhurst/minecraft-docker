@@ -9,10 +9,10 @@ services:
         - USER_UID=1000
         - USER_GID=1000
     environment:
-      - MINRAM=2G
-      - MAXRAM=16G
-      - SHUTDOWN_PORT=20563
-      - WORLD_PATH=data
+      - MINRAM=${MINRAM-2G}
+      - MAXRAM=${MAXRAM-16G}
+      - SHUTDOWN_PORT=${SHUTDOWN_PORT-20563}
+      - WORLD_PATH=${WORLD_PATH-data}
     restart: unless-stopped
     ports:
       - "25565:25565"
