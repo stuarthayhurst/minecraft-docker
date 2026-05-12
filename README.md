@@ -43,8 +43,7 @@
       - `PingShutdown`'s config must be changed to match, found in `projects/[NAME]/plugins/PingShutdown/config.yml`
 
 > [!WARNING]
-> `SHUTDOWN_PORT` shouldn't be exposed outside of the container, otherwise anyone can ping the port to stop the server down
-> This should be completely internal to the container
+> `SHUTDOWN_PORT` should be left as internal to container, otherwise anyone can ping the port to stop the server down
 
 ## Backups:
   - Set `BACKUP_PATH`, `BACKUP_NAME` and `VERSION` in `backup-config` to configure the backups
