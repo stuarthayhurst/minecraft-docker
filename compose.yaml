@@ -12,6 +12,7 @@ services:
       - MINRAM=2G
       - MAXRAM=16G
       - SHUTDOWN_PORT=20563
+      - WORLD_PATH=data
     restart: unless-stopped
     ports:
       - "25565:25565"

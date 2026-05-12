@@ -9,15 +9,12 @@
   - Run `docker compose stop` or `docker compose down` to stop the container
   - Run `docker compose attach minecraft` to attach to the server's command prompt
   - The container uses the `unless-stopped` restart policy
-  - It's recommended to use the `data` volume for world files, see [Volumes](#volumes) for info
-    - For a single world, set `level-name` to `data/[WORLD NAME]` in `server-properties`
-    - For multiple worlds, set `world-container` to `data` in `bukkit.yml`
 
 ## Volumes:
   - The volumes can be managed as a project, see [Projects](#projects)
   - Within the container, several mountpoints exist:
     - `data/`: Generic persistent data, designed for worlds and the server icon
-      - Nothing uses this by default, `server.properties` or `bukkit.yml` must be told to
+      - Worlds use this by default
     - `config/`: Configuration files for the server, see `Dockerfile` for the symlinks pointing here
     - `plugins/`: Plugins and their configs, comes with `PingShutdown` to handle container stops gracefully
     - `logs/`: Logs and crash reports for the server
@@ -45,6 +42,7 @@
     - `MAXRAM` - Maximum amount of RAM to allocate for the JVM, defaults to `16G`
     - `SHUTDOWN_PORT`: `[1 - 65535]` - The port to use for `PingShutdown`, defaults to `20563`
       - `PingShutdown`'s config must be changed to match, found in `projects/[NAME]/plugins/PingShutdown/config.yml`
+    - `WORLD_PATH` - Path relative to the server to store the worlds in, defaults to `data`
 
 > [!WARNING]
 > `SHUTDOWN_PORT` should be left as internal to container, otherwise anyone can ping the port to stop the server down
