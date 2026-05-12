@@ -43,8 +43,7 @@ RUN mkdir -p /server/logs/crash-reports
 RUN ln -s /server/logs/crash-reports /server/crash-reports
 
 #Plugin and wrapper to ping the shutdown plugin when SIGTERM is received, then shutdown gracefully
-RUN mkdir /server/plugins
-RUN wget -O /server/plugins/PingShutdown-latest.jar https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/PingShutdown-latest.jar
+RUN wget -O /server/PingShutdown-latest.jar https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/PingShutdown-latest.jar
 RUN wget -O /server/wrapper.py https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/wrapper.py
 
 #Spigot and wrapper runtime dependencies
@@ -54,4 +53,6 @@ RUN if [[ "${EULA}" == "true" ]]; then echo "eula=true" > eula.txt; fi
 
 STOPSIGNAL SIGTERM
 EXPOSE 25565
-CMD python3 wrapper.py java -Xms$MINRAM -Xmx$MAXRAM -jar spigot-${SPIGOT_VERSION}.jar nogui
+
+#Copy the PingShutdown plugin across, launch the wrapper
+CMD cp /server/PingShutdown-latest.jar /server/plugins/PingShutdown-latest.jar; python3 wrapper.py java -Xms$MINRAM -Xmx$MAXRAM -jar spigot-${SPIGOT_VERSION}.jar nogui
