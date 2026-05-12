@@ -36,6 +36,10 @@
       - Must be a valid [eclipse-temurin container](https://github.com/adoptium/containers)
     - `SPIGOT_VERSION` - The version of Minecraft to build Spigot for
     - `EULA`: `[true (default) / false]` - Accept / reject the EULA
+    - `USER_UID` - The UID of the user inside the container, defaults to `1000`
+      - Will be used as the user ID for the volumes too
+    - `USER_GID` - The GID of the user inside the container, defaults to `1000`
+      - Will be used as the group ID for the volumes too
   - Environment variables:
     - `MINRAM` - Minimum amount of RAM to allocate for the JVM, defaults to `2G`
     - `MAXRAM` - Maximum amount of RAM to allocate for the JVM, defaults to `16G`

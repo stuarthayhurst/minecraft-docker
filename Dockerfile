@@ -17,11 +17,23 @@ FROM eclipse-temurin:${JAVA_VERSION}-jre-alpine
 ARG EULA
 ARG SPIGOT_VERSION
 ENV SPIGOT_VERSION ${SPIGOT_VERSION}
+ARG USER_UID
+ARG USER_GID
 
-#Copy the server .jar in
+#Spigot and wrapper runtime dependencies
+RUN apk add --no-cache libudev-zero python3
+
+#Copy the server .jar in from the previous stage
 COPY --from=0 /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar
 WORKDIR /server
 
+#Set up and switch to a new non-root user
+RUN addgroup --gid ${USER_GID} minecraft \
+    && adduser --ingroup minecraft -D --uid ${USER_UID} minecraft
+RUN chown -R minecraft:minecraft /server
+USER minecraft
+
+#Create volume mountpoints
 VOLUME /server/data
 VOLUME /server/config
 VOLUME /server/plugins
@@ -46,13 +58,11 @@ RUN ln -s /server/logs/crash-reports /server/crash-reports
 RUN wget -O /server/PingShutdown-latest.jar https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/PingShutdown-latest.jar
 RUN wget -O /server/wrapper.py https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/wrapper.py
 
-#Spigot and wrapper runtime dependencies
-RUN apk add --no-cache libudev-zero python3
-
 RUN if [[ "${EULA}" == "true" ]]; then echo "eula=true" > eula.txt; fi
 
 STOPSIGNAL SIGTERM
 EXPOSE 25565
 
 #Copy the PingShutdown plugin across, launch the wrapper
-CMD cp /server/PingShutdown-latest.jar /server/plugins/PingShutdown-latest.jar; python3 wrapper.py java -Xms$MINRAM -Xmx$MAXRAM -jar spigot-${SPIGOT_VERSION}.jar nogui
+CMD cp /server/PingShutdown-latest.jar /server/plugins/PingShutdown-latest.jar \
+    && python3 wrapper.py java -Xms$MINRAM -Xmx$MAXRAM -jar spigot-${SPIGOT_VERSION}.jar nogui

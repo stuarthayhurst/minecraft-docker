@@ -6,6 +6,8 @@ services:
         - JAVA_VERSION=26
         - SPIGOT_VERSION=26.1.2
         - EULA=true
+        - USER_UID=1000
+        - USER_GID=1000
     environment:
       - MINRAM=2G
       - MAXRAM=16G
