@@ -22,6 +22,7 @@ services:
       - data:/server/data
       - config:/server/config
       - plugins:/server/plugins
+      - logs:/server/logs
 
 volumes:
   data:
@@ -42,3 +43,9 @@ volumes:
       type: none
       o: bind
       device: "./projects/${COMPOSE_PROJECT_NAME}/plugins"
+  logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "./projects/${COMPOSE_PROJECT_NAME}/logs"
