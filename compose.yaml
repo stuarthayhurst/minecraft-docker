@@ -29,16 +29,16 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: "${PWD}/projects/${COMPOSE_PROJECT_NAME}/data"
+      device: "./projects/${COMPOSE_PROJECT_NAME}/data"
   config:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: "${PWD}/projects/${COMPOSE_PROJECT_NAME}/config"
+      device: "./projects/${COMPOSE_PROJECT_NAME}/config"
   plugins:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: "${PWD}/projects/${COMPOSE_PROJECT_NAME}/plugins"
+      device: "./projects/${COMPOSE_PROJECT_NAME}/plugins"
