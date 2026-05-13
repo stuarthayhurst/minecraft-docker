@@ -14,7 +14,7 @@
   - The volumes can be managed as a project, see [Projects](#projects)
   - Within the container, several mountpoints exist:
     - `data/`: Generic persistent data, designed for worlds and the server icon
-      - Worlds use this by default
+      - Worlds and the icon use this by default, but it can be used for arbitrary data
     - `config/`: Configuration files for the server, see `Dockerfile` for the symlinks pointing here
     - `plugins/`: Plugins and their configs, comes with `PingShutdown` to handle container stops gracefully
     - `logs/`: Logs and crash reports for the server

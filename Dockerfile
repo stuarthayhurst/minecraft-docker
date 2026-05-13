@@ -39,6 +39,9 @@ VOLUME /server/config
 VOLUME /server/plugins
 VOLUME /server/logs
 
+#Link the server icon to /server/data
+RUN ln -s /server/data/server-icon.png /server/server-icon.png
+
 #Link miscellaneous configs to /server/config
 RUN ln -s /server/config/banned-ips.json /server/banned-ips.json \
     && ln -s /server/config/banned-players.json /server/banned-players.json \
@@ -51,6 +54,7 @@ RUN ln -s /server/config/banned-ips.json /server/banned-ips.json \
     && ln -s /server/config/spigot.yml /server/spigot.yml \
     && ln -s /server/config/whitelist.json /server/whitelist.json
 
+#Link the crash reports to /server/logs/crash-reports
 RUN mkdir -p /server/logs/crash-reports
 RUN ln -s /server/logs/crash-reports /server/crash-reports
 
