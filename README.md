@@ -45,7 +45,7 @@
     - `WORLD_PATH` - Path relative to the server to store the worlds in, defaults to `data`
 
 > [!WARNING]
-> `SHUTDOWN_PORT` should be left as internal to container, otherwise anyone can ping the port to stop the server down
+> `SHUTDOWN_PORT` should be internal to container, otherwise anyone can ping the port to restart the server
 
 ## Backups:
   - Use `BACKUP_NAME` and `VERSION` in `backup-config` to configure the backup's name
