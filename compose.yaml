@@ -5,6 +5,7 @@ services:
       args:
         - JAVA_VERSION=26
         - SPIGOT_VERSION=26.1.2
+        - PING_SHUTDOWN_VERSION=latest
         - EULA=false
         - USER_UID=1000
         - USER_GID=1000

@@ -4,6 +4,7 @@ ARG JAVA_VERSION
 #Stage 0: Build the server .jar
 FROM eclipse-temurin:${JAVA_VERSION}-jdk-alpine AS build
 ARG SPIGOT_VERSION
+ARG PING_SHUTDOWN_VERSION
 
 #Spigot build dependencies
 RUN apk add --no-cache git
@@ -11,6 +12,10 @@ RUN apk add --no-cache git
 #Build the server .jar
 RUN wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
 RUN java -jar BuildTools.jar --rev ${SPIGOT_VERSION}
+
+#Fetch the required PingShutdown version
+COPY build-scripts /build-scripts
+RUN /build-scripts/download-plugins.sh ${PING_SHUTDOWN_VERSION}
 
 #Stage 1: Set up runtime container
 FROM eclipse-temurin:${JAVA_VERSION}-jre-alpine
@@ -56,13 +61,13 @@ RUN ln -s /server/config/banned-ips.json /server/banned-ips.json \
 RUN mkdir -p /server/logs/crash-reports
 RUN ln -s /server/logs/crash-reports /server/crash-reports
 
-#Plugin and wrapper to ping the shutdown plugin when SIGTERM is received, then shutdown gracefully
-RUN wget -O /server/PingShutdown-latest.jar https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/PingShutdown-latest.jar
-RUN wget -O /server/wrapper.py https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/wrapper.py
-
 #Pre-accept the eula if configured to
 RUN mkdir -p /server/config
 RUN if [[ "${EULA}" == "true" ]]; then echo "eula=true" > /server/config/eula.txt; fi
+
+#Plugin and wrapper to ping the shutdown plugin when SIGTERM is received, then shutdown gracefully
+COPY --from=build /PingShutdown-latest.jar /server/PingShutdown-latest.jar
+COPY --from=build /wrapper.py /server/wrapper.py
 
 #Copy the server .jar in from the build stage
 COPY --from=build /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar

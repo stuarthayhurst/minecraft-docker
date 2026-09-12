@@ -32,6 +32,8 @@
     - `JAVA_VERSION` - The version of major Java to use in the container
       - Must be a valid [eclipse-temurin container](https://github.com/adoptium/containers)
     - `SPIGOT_VERSION` - The version of Minecraft to build Spigot for
+    - `PING_SHUTDOWN_VERSION` - The version of PingShutdown to use
+      - Only change this if targeting a historically supported Spigot version
     - `EULA`: `[true / false (default)]` - Accept / reject the EULA automatically
       - `config/eula.txt` can be manually accepted after the initial run
       - Setting `EULA` to true automatically accepts during the build instead
