@@ -44,6 +44,7 @@ RUN ln -s /server/config/banned-ips.json /server/banned-ips.json \
     && ln -s /server/config/banned-players.json /server/banned-players.json \
     && ln -s /server/config/bukkit.yml /server/bukkit.yml \
     && ln -s /server/config/commands.yml /server/commands.yml \
+    && ln -s /server/config/eula.txt /server/eula.txt \
     && ln -s /server/config/help.yml /server/help.yml \
     && ln -s /server/config/ops.json /server/ops.json \
     && ln -s /server/config/permissions.yml /server/permissions.yml \
@@ -59,10 +60,12 @@ RUN ln -s /server/logs/crash-reports /server/crash-reports
 RUN wget -O /server/PingShutdown-latest.jar https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/PingShutdown-latest.jar
 RUN wget -O /server/wrapper.py https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/wrapper.py
 
+#Pre-accept the eula if configured to
+RUN mkdir -p /server/config
+RUN if [[ "${EULA}" == "true" ]]; then echo "eula=true" > /server/config/eula.txt; fi
+
 #Copy the server .jar in from the build stage
 COPY --from=build /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar
-
-RUN if [[ "${EULA}" == "true" ]]; then echo "eula=true" > eula.txt; fi
 
 STOPSIGNAL SIGTERM
 EXPOSE 25565

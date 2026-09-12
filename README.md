@@ -32,7 +32,10 @@
     - `JAVA_VERSION` - The version of major Java to use in the container
       - Must be a valid [eclipse-temurin container](https://github.com/adoptium/containers)
     - `SPIGOT_VERSION` - The version of Minecraft to build Spigot for
-    - `EULA`: `[true (default) / false]` - Accept / reject the EULA
+    - `EULA`: `[true / false (default)]` - Accept / reject the EULA automatically
+      - `config/eula.txt` can be manually accepted after the initial run
+      - Setting `EULA` to true automatically accepts during the build instead
+      - If `config/eula.txt` already exists, it must be manually changed instead
     - `USER_UID` - The UID of the user inside the container, defaults to `1000`
       - Will be used as the user ID for the volumes too
     - `USER_GID` - The GID of the user inside the container, defaults to `1000`
