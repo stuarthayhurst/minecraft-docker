@@ -23,11 +23,8 @@ ARG USER_GID
 #Spigot and wrapper runtime dependencies
 RUN apk add --no-cache libudev-zero python3
 
-#Copy the server .jar in from the build stage
-COPY --from=build /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar
-WORKDIR /server
-
 #Set up and switch to a new non-root user
+WORKDIR /server
 RUN addgroup --gid ${USER_GID} minecraft \
     && adduser --ingroup minecraft -D --uid ${USER_UID} minecraft
 RUN chown -R minecraft:minecraft /server
@@ -61,6 +58,9 @@ RUN ln -s /server/logs/crash-reports /server/crash-reports
 #Plugin and wrapper to ping the shutdown plugin when SIGTERM is received, then shutdown gracefully
 RUN wget -O /server/PingShutdown-latest.jar https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/PingShutdown-latest.jar
 RUN wget -O /server/wrapper.py https://github.com/stuarthayhurst/spigot-ping-shutdown-plugin/releases/latest/download/wrapper.py
+
+#Copy the server .jar in from the build stage
+COPY --from=build /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar
 
 RUN if [[ "${EULA}" == "true" ]]; then echo "eula=true" > eula.txt; fi
 
