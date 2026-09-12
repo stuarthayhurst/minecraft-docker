@@ -2,7 +2,7 @@
 ARG JAVA_VERSION
 
 #Stage 0: Build the server .jar
-FROM eclipse-temurin:${JAVA_VERSION}-jdk-alpine
+FROM eclipse-temurin:${JAVA_VERSION}-jdk-alpine AS build
 ARG SPIGOT_VERSION
 
 #Spigot build dependencies
@@ -23,8 +23,8 @@ ARG USER_GID
 #Spigot and wrapper runtime dependencies
 RUN apk add --no-cache libudev-zero python3
 
-#Copy the server .jar in from the previous stage
-COPY --from=0 /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar
+#Copy the server .jar in from the build stage
+COPY --from=build /spigot-${SPIGOT_VERSION}.jar /server/spigot-${SPIGOT_VERSION}.jar
 WORKDIR /server
 
 #Set up and switch to a new non-root user
