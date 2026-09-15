@@ -4,7 +4,7 @@ services:
       context: .
       args:
         - JAVA_VERSION=26
-        - SPIGOT_VERSION=26.1.2
+        - SPIGOT_VERSION=26.3
         - PING_SHUTDOWN_VERSION=latest
         - EULA=false
         - USER_UID=1000
