@@ -17,6 +17,11 @@ if [[ ! -f "$CONFIG_PATH" ]]; then
   echo "VERSION=\"$VERSION\"" >> "$CONFIG_PATH"
 fi
 
+#Exit if the only task was to create the config
+if [[ "$1" == "config" ]]; then
+  exit
+fi
+
 #Apply the config
 #shellcheck disable=1090
 source "$CONFIG_PATH"

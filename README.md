@@ -56,6 +56,7 @@
   - Run `./backup.sh [DESTINATION]` to backup `projects/`
     - If `DESTINATION` isn't specified or doesn't exist, the repository's directory will be used instead
   - Backups use `tar` and `pbzip2`
+  - Use `./backup.sh config` to create the config file and exit
   - `backup-config` will be created automatically with defaults when `backup.sh` is run
     - `BACKUP_PATH` can be overridden by passing it as the first argument
       - The default is `./backups`
