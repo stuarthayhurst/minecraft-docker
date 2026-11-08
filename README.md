@@ -53,7 +53,11 @@
 > `SHUTDOWN_PORT` should be internal to the container, otherwise anyone can ping the port to restart the server
 
 ## Backups:
-  - Use `BACKUP_NAME` and `VERSION` in `backup-config` to configure the backup's name
   - Run `./backup.sh [DESTINATION]` to backup `projects/`
     - If `DESTINATION` isn't specified or doesn't exist, the repository's directory will be used instead
   - Backups use `tar` and `pbzip2`
+  - `backup-config` will be created automatically with defaults when `backup.sh` is run
+    - `BACKUP_PATH` can be overridden by passing it as the first argument
+      - The default is `./backups`
+      - For example `./backup.sh ~/Backups`
+    - `BACKUP_NAME` and `VERSION` are used to configure the backup's name and version directory

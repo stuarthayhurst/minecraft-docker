@@ -1,6 +1,0 @@
-#!/bin/bash
-
-#Config for miscellaneous scripts
-
-BACKUP_NAME="Minecraft-Server"
-VERSION="26.1.2"
